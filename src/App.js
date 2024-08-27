@@ -1,23 +1,54 @@
-import logo from './logo.svg';
 import './App.css';
+import './NavBar.css';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="NavBar">
+      <Box sx={{ width: 500 }}>
+      <p>Array Size</p>
+       <Slider
+         size="small"
+         defaultValue={70}
+         aria-label="Small"
+         valueLabelDisplay="auto"
+       />
+     </Box>
+     <br/>
+     <div class= "vertical"></div>
+     <Box sx={{ width: 500 }}>
+     <p>Sorting speed</p>
+      <Slider
+        size="small"
+        defaultValue={70}
+        aria-label="Small"
+        valueLabelDisplay="auto"
+      />
+    </Box>
+    <div class= "vertical"></div>
+    <Box sx={{ width: 500 }}>
+    <p>Generate Array</p>
+    <Button>new array</Button>
+   </Box>
+    <div class= "vertical"></div>
+    <Box sx={{ width: 500 }}>
+      <ButtonGroup color="secondary" aria-label="Medium-sized button group">
+          <Button>One</Button>
+          <Button>Two</Button>
+          <Button>Three</Button>
+          <Button>Four</Button>
+      </ButtonGroup>
+    </Box>
       </header>
+
+      <body className="App-body">
+
+      </body>
     </div>
   );
 }

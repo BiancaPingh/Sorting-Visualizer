@@ -1,0 +1,14 @@
+.NavBar {
+  background-color: #14161A;
+  align-items: center;
+  justify-content: center;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: row;
+  font-size: calc(2px + 2vmin);
+  color: white;
+}
+.vertical {
+            border-left: 5px solid black;
+            height: 120px;
+}
