@@ -1,0 +1,8 @@
+.bar{
+  align:center;
+  justify-content: center;
+  flex-direction: row;
+  background: blue;
+  width: 1vmin;
+  margin: 0px 3px;
+}
