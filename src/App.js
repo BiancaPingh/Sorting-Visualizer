@@ -3,6 +3,8 @@ import './App.css';
 import './NavBar.css';
 //JS
 import Bar from './Bar.js';
+import {quickSorting} from './Algorithms/quickSorting.js';
+import {bubbleSorting} from './Algorithms/bubbleSorting.js';
 //lib
 import { Component } from 'react';
 import Box from '@mui/material/Box';
@@ -24,17 +26,70 @@ class App extends Component {
     colorSteps: [],
     currentStep: 0,
     count: 20,
-    delay: 20, //from: 100-state.delay
-    algorithm: '',
+    delay: 20, 
+    algorithm: ['quickSort','bubbleSort'],
     timeouts: []
   };
 
+  alg = {
+   'quickSort': quickSorting,
+   'bubbleSort': bubbleSorting,
+  }
+
+  clearTimeouts = () => {
+    this.state.timeouts.forEach((timeout) => {
+      clearTimeout(timeout);
+    });
+    this.setState({
+      timeouts: []
+    });
+  }
+
+  generateSteps = (index) => {
+    let array = this.state.array.slice();
+    let steps = this.state.arraySteps.slice();
+    let color = this.state.colorSteps.slice();
+
+    this.alg[this.state.algorithm[index]](array, 0, array.length-1, steps, color);
+
+    this.setState({
+      arraySteps: steps,
+      colorSteps: color,
+    });
+  }
+
+
+  start = () => {
+    let steps = this.state.arraySteps;
+    let colorSteps = this.state.colorSteps;
+    this.clearTimeouts();
+
+    let timeouts = [];
+    let i=0;
+
+    while(i < steps.length - this.state.currentStep ){
+      let timeout = setTimeout(() => {
+        let currentStep = this.state.currentStep;
+        this.setState({
+          array: steps[currentStep],
+          colorKey:colorSteps[currentStep],
+          currentStep:currentStep+1,
+        });
+        timeouts.push(timeout);
+      }, this.state.delay *i);
+      i++;
+    }
+    this.setState({
+      timeouts: timeouts,
+    });
+  }
 
   randomNumber = (min,max) =>{
     return Math.floor(Math.random() * (max-min) + min);
   }
 
   randomArr = () => {
+    this.clearTimeouts();
     const count = this.state.count;
     const temp = [];
     const col =[];
@@ -47,6 +102,8 @@ class App extends Component {
       array: temp,
       arraySteps: [temp],
       colorKey: col,
+      colorSteps: [col],
+      currentStep: 0,
     })
 }
 
@@ -71,7 +128,7 @@ class App extends Component {
        <br/>
        <div className= "vertical"></div>
        <Box sx={{ width: 500 }}>
-       <p>Sorting speed</p>
+       <p>Sorting delay</p>
         <Slider
           size="small"
           value={this.state.delay}
@@ -79,6 +136,8 @@ class App extends Component {
           aria-label="Small"
           valueLabelDisplay="auto"
           onDrag={this.handleDragSpeed}
+          min={15}
+          max={100}
         />
       </Box>
       <div className= "vertical"></div>
@@ -88,12 +147,14 @@ class App extends Component {
      </Box>
       <div className= "vertical"></div>
       <Box sx={{ width: 500 }}>
-        <ButtonGroup color="secondary" aria-label="Medium-sized button group">
-            <Button>One</Button>
-            <Button>Two</Button>
-            <Button>Three</Button>
-            <Button>Four</Button>
+        <ButtonGroup color="secondary" aria-label="Medium-sized button group" sx={{ width: 400 }}>
+            <Button onClick={() => this.generateSteps(0)}>Quick sort</Button>
+            <Button onClick={() => this.generateSteps()}>Merge sort</Button>
+            <Button onClick={() => this.generateSteps(1)}>Bubble sort</Button>
+            <Button onClick={() => this.generateSteps()}>Heap sort</Button>
         </ButtonGroup>
+        <br/>
+        <Button  variant="outlined" onClick={() => this.start()}>sort</Button>
       </Box>
         </header>
       <body className="App-body">
