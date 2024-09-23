@@ -5,6 +5,8 @@ import './NavBar.css';
 import Bar from './Bar.js';
 import {quickSorting} from './Algorithms/quickSorting.js';
 import {bubbleSorting} from './Algorithms/bubbleSorting.js';
+import {mergeSorting} from './Algorithms/mergeSorting.js';
+import {heapSorting} from './Algorithms/heapSorting.js';
 //lib
 import { Component } from 'react';
 import Box from '@mui/material/Box';
@@ -26,14 +28,16 @@ class App extends Component {
     colorSteps: [],
     currentStep: 0,
     count: 20,
-    delay: 20, 
-    algorithm: ['quickSort','bubbleSort'],
+    delay: 20,
+    algorithm: ['quickSort','mergeSort','bubbleSort','heapSort'],
     timeouts: []
   };
 
   alg = {
    'quickSort': quickSorting,
+   'mergeSort': mergeSorting,
    'bubbleSort': bubbleSorting,
+   'heapSort': heapSorting
   }
 
   clearTimeouts = () => {
@@ -46,6 +50,7 @@ class App extends Component {
   }
 
   generateSteps = (index) => {
+    this.clearTimeouts();
     let array = this.state.array.slice();
     let steps = this.state.arraySteps.slice();
     let color = this.state.colorSteps.slice();
@@ -149,9 +154,9 @@ class App extends Component {
       <Box sx={{ width: 500 }}>
         <ButtonGroup color="secondary" aria-label="Medium-sized button group" sx={{ width: 400 }}>
             <Button onClick={() => this.generateSteps(0)}>Quick sort</Button>
-            <Button onClick={() => this.generateSteps()}>Merge sort</Button>
-            <Button onClick={() => this.generateSteps(1)}>Bubble sort</Button>
-            <Button onClick={() => this.generateSteps()}>Heap sort</Button>
+            <Button onClick={() => this.generateSteps(1)}>Merge sort</Button>
+            <Button onClick={() => this.generateSteps(2)}>Bubble sort</Button>
+            <Button onClick={() => this.generateSteps(3)}>Heap sort</Button>
         </ButtonGroup>
         <br/>
         <Button  variant="outlined" onClick={() => this.start()}>sort</Button>
